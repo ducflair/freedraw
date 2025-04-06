@@ -110,7 +110,9 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
       - name: Update Rust toolchain
         run: rustup update stable
-      
+      - name: Install cargo-edit
+        run: cargo install cargo-edit
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
