@@ -1,6 +1,6 @@
 <p align="center">
   <br/>
-  <a target="_blank"><img style="border-radius: 40px;" width="256px" src="assets/card.png" /></a>
+  <a target="_blank"><img style="border-radius: 40px;" width="256px" src="public/card.png" /></a>
   <p align="center">Rust Hand Drawn Path Generator</p>
   <p align="center" style="align: center;">
     <a href="https://crates.io/crates/freedraw"><img src="https://shields.io/badge/Crates-FFC933?logo=Rust&logoColor=646464&style=round-square" alt="Crates" /></a>
@@ -14,7 +14,7 @@
 A Rust port of the [perfect-freehand](https://github.com/steveruizok/perfect-freehand) library, designed for creating smooth and beautiful freehand drawings.
 
 <p align="center">
-  <img src="./assets/process.gif" alt="A GIF showing a stroke with input points, outline points, and a curved path" width="400"/>
+  <img src="./public/process.gif" alt="A GIF showing a stroke with input points, outline points, and a curved path" width="400"/>
 </p>
 
 ## Overview
@@ -36,7 +36,7 @@ Add the dependency to your Cargo.toml:
 
 ```toml
 [dependencies]
-freedraw = "0.1.0"
+freedraw = "x.x.x"
 ```
 
 ## Basic Usage

@@ -8,6 +8,11 @@ license = "MIT"
 repository = "https://github.com/ducflair/freedraw"
 keywords = ["drawing", "graphics", "freehand", "stroke"]
 categories = ["graphics", "rendering"]
+exclude = [
+    "tests/**/*",
+    "examples/**/*",
+    "public/**/*"
+]
 
 [dependencies]
 
