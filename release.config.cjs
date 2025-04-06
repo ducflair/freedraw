@@ -17,17 +17,5 @@ module.exports = {
           "cargo publish --allow-dirty --token ${process.env.CARGO_REGISTRY_TOKEN}",
       }
     ],
-    ["@semantic-release/github", {
-      "assets": [
-        {"path": "freedraw/target/release/libfreedraw.rlib", "label": "Freedraw Library"},
-      ]
-    }],
-    [
-      "@semantic-release/git",
-      {
-        "assets": ["freedraw/Cargo.toml", "freedraw/Cargo.lock"],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }
-    ]
   ],
 };
