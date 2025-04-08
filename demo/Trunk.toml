@@ -1,0 +1,26 @@
+[build]
+# Build in release mode
+release = false
+
+# The public URL path for assets when deployed
+public_url = "/freedraw/"
+
+[watch]
+# Watch for changes in these directories
+watch = ["src", "index.html", "styles.css"]
+
+# Asset handling for SVG files
+# This tells Trunk to copy SVG files from the given location to dist/
+[[hooks]]
+stage = "pre_build"
+command = "mkdir"
+command_arguments = ["-p", "dist"]
+
+
+[serve]
+# The address to serve on
+address = "127.0.0.1"
+# The port to serve on
+port = 8080
+# Open a browser tab once the server starts
+open = true 

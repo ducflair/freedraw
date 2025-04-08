@@ -1,4 +1,4 @@
-use freedraw::{get_stroke_points, InputPoint, StrokeOptions, StrokePoint};
+use freedraw::{get_stroke_points, InputPoint, StrokeOptions};
 
 #[test]
 fn test_get_stroke_points_with_empty_array() {

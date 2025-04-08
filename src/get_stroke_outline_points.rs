@@ -242,8 +242,11 @@ pub fn get_stroke_outline_points(
 
     // Add caps if needed
     let mut result = Vec::new();
+    
+    // Get the closed flag
+    let close_path = options.closed.unwrap_or(false);
 
-    // Cap start
+    // Start cap
     if cap_start && !left_pts.is_empty() && first_radius.is_some() {
         let first_point = points[0].point;
         let first_normal = per(points[0].vector);
@@ -252,9 +255,9 @@ pub fn get_stroke_outline_points(
         let start_left = add(first_point, offset_vector);
         let start_right = add(first_point, neg(offset_vector));
 
-        // Add the first cap
+        // Add the start cap (from left to right)
         result.push(start_left);
-
+        
         // Add semicircular cap
         if points.len() > 1 {
             let steps = 4;
@@ -268,15 +271,12 @@ pub fn get_stroke_outline_points(
         }
     }
 
-    // Add left side points
-    result.extend(left_pts);
-
-    // Add right side points in reverse
-    for p in right_pts.iter().rev() {
+    // Add right side points (from start to end)
+    for p in right_pts.iter() {
         result.push(*p);
     }
-
-    // Cap end
+    
+    // End cap
     if cap_end && !right_pts.is_empty() {
         let last_point = points.last().map(|p| p.point).unwrap_or_default();
         let last_vector = points.last().map(|p| p.vector).unwrap_or_default();
@@ -300,23 +300,28 @@ pub fn get_stroke_outline_points(
         };
 
         let offset_vector = mul(last_normal, tapered_radius);
-        let end_left = add(last_point, offset_vector);
         let end_right = add(last_point, neg(offset_vector));
+        let end_left = add(last_point, offset_vector);
 
-        // Add semicircular cap
-        if points.len() > 1 && cap_end {
+        // Add semicircular cap (from right to left)
+        if points.len() > 1 {
             let steps = 4;
             for i in 0..=steps {
                 let t = i as f64 / steps as f64;
-                result.push(rot_around(end_left, last_point, t * FIXED_PI));
+                result.push(rot_around(end_right, last_point, t * FIXED_PI));
             }
         } else {
-            result.push(end_right);
+            result.push(end_left);
         }
     }
-
-    // Close the path
-    if !result.is_empty() && result.len() > 1 {
+    
+    // Add left side points (from end to start)
+    for p in left_pts.iter().rev() {
+        result.push(*p);
+    }
+    
+    // Close the path if needed
+    if close_path && !result.is_empty() && result.len() > 1 {
         result.push(result[0]);
     }
 

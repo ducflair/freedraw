@@ -6,6 +6,14 @@ module.exports = {
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     [
+      "@semantic-release/github",
+      {
+        assets: [
+          { path: "dist/**/*", label: "Distribution files" },
+        ]
+      }
+    ],
+    [
       "@semantic-release/exec",
       {
         // Prepare step: Set the crate version and build the project

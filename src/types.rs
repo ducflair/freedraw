@@ -8,6 +8,7 @@
 /// * `start` - Cap, taper and easing for the start of the line.
 /// * `end` - Cap, taper and easing for the end of the line.
 /// * `last` - Whether to handle the points as a completed stroke.
+/// * `closed` - Whether to close the path by connecting the last point back to the first.
 #[derive(Clone)]
 pub struct StrokeOptions {
     pub size: Option<f64>,
@@ -19,6 +20,7 @@ pub struct StrokeOptions {
     pub start: Option<TaperOptions>,
     pub end: Option<TaperOptions>,
     pub last: Option<bool>,
+    pub closed: Option<bool>,
 }
 
 impl Default for StrokeOptions {
@@ -33,6 +35,7 @@ impl Default for StrokeOptions {
             start: None,
             end: None,
             last: None,
+            closed: Some(false),
         }
     }
 }
@@ -74,6 +77,7 @@ impl std::fmt::Debug for StrokeOptions {
             .field("start", &self.start)
             .field("end", &self.end)
             .field("last", &self.last)
+            .field("closed", &self.closed)
             .finish()
     }
 }

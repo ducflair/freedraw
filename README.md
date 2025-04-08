@@ -1,6 +1,6 @@
 <p align="center">
   <br/>
-  <a target="_blank"><img style="border-radius: 40px;" width="256px" src="public/card.png" /></a>
+  <a target="_blank"><img width="256px" src="https://github.com/ducflair/freedraw/blob/main/public/card.png?raw=true" /></a>
   <p align="center">Rust Hand Drawn Path Generator</p>
   <p align="center" style="align: center;">
     <a href="https://crates.io/crates/freedraw"><img src="https://shields.io/badge/Crates-FFC933?logo=Rust&logoColor=646464&style=round-square" alt="Crates" /></a>
@@ -11,11 +11,40 @@
 </p>
 
 # freedraw
-A Rust port of the [perfect-freehand](https://github.com/steveruizok/perfect-freehand) library, designed for creating smooth and beautiful freehand drawings.
 
-<p align="center">
-  <img src="./public/process.gif" alt="A GIF showing a stroke with input points, outline points, and a curved path" width="400"/>
-</p>
+Rust port of the [perfect-freehand](https://github.com/steveruizok/perfect-freehand) library for creating smooth freehand lines in SVG.
+
+## SVG Examples
+
+This repository includes a Yew demo application that showcases various SVG examples generated with the `freedraw` library.
+
+### Generating SVG Examples
+
+The SVG examples are generated using the `svg_conversion` tool:
+
+```bash
+cargo run --example svg_conversion
+```
+
+This will read data from the `tests` directory and generate SVG files in the `demo/dist` directory.
+
+### Running the Demo
+
+To run the demo application:
+
+```bash
+cd demo
+trunk serve
+```
+
+Then visit http://localhost:8080/freedraw/ in your browser.
+
+## Project Structure
+
+- `src/` - Core library code
+- `tests/` - Test data and unit tests
+- `tools/` - Utility scripts
+- `demo/` - Yew application for showcasing SVG examples
 
 ## Overview
 
@@ -154,6 +183,6 @@ Check out the examples directory for more usage examples:
 
 ## License
 
-MIT License
+[MIT License](LICENSE)
 
 Original JavaScript library by [Steve Ruiz](https://twitter.com/steveruizok) 
