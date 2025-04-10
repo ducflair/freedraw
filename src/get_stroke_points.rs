@@ -1,6 +1,5 @@
 use crate::types::{InputPoint, StrokeOptions, StrokePoint};
 use crate::vec::{add, dist, is_equal, lrp, sub, uni};
-use std::cmp::min;
 
 /// Get an array of points as objects with an adjusted point, pressure, vector, distance, and running_length.
 ///

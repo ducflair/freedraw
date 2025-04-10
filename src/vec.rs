@@ -64,6 +64,7 @@ pub fn dist(a: [f64; 2], b: [f64; 2]) -> f64 {
 }
 
 /// Mean between two vectors or mid vector between two vectors
+#[allow(dead_code)]
 pub fn med(a: [f64; 2], b: [f64; 2]) -> [f64; 2] {
     mul(add(a, b), 0.5)
 }
@@ -88,6 +89,7 @@ pub fn lrp(a: [f64; 2], b: [f64; 2], t: f64) -> [f64; 2] {
 }
 
 /// Project a point A in the direction B by a scalar c
+#[allow(dead_code)]
 pub fn prj(a: [f64; 2], b: [f64; 2], c: f64) -> [f64; 2] {
     add(a, mul(b, c))
 } 
