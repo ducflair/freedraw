@@ -565,7 +565,7 @@ pub fn app() -> Html {
     html! {
         <div class="container">
             <div class="header">
-                <h1>{ "Perfect Freehand SVG Examples" }</h1>
+                <h1>{ "freedraw" }</h1>
                 <p>{ "Comparison of different SVG rendering options from the Rust port of perfect-freehand" }</p>
             </div>
             
