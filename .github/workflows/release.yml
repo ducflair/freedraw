@@ -36,56 +36,77 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
+          target: wasm32-unknown-unknown
       
       - name: Run tests
         run: cargo test
-      
-      - name: Generate examples
-        run: |
-          mkdir -p examples/dist
-          cargo run --example svg_conversion
-          
-  pages:
-    name: Deploy Preview
+
+  build:
+    name: Build Demo App
     needs: test
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-      - name: Update Rust toolchain
-        run: rustup update stable
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin
+            ~/.cargo/git
+            ~/.cargo/registry
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       
-      - name: Generate examples
+      - name: Install Trunk
+        uses: jetli/trunk-action@v0.4.0
+        with:
+          version: 'latest'
+      
+      - name: Add WASM target
+        run: rustup target add wasm32-unknown-unknown
+      
+      - name: Generate Examples
         run: |
-          mkdir -p examples/dist
-          cargo run --example svg_conversion
+          cd demo
+          cargo run --bin generate-svg
+      
+      - name: Build Demo App
+        run: |
+          cd demo
+          RUSTFLAGS='--cfg getrandom_backend="wasm_js"' trunk build --public-url "/freedraw" --release
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
       
-      - name: Create preview directory
-        run: |
-          mkdir -p _site
-          cp -r examples/* _site/
-          # Create an index.html that redirects to view.html
-          echo '<meta http-equiv="refresh" content="0; url=view.html">' > _site/index.html
-      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-      
+        with:
+          path: "demo/dist"
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    
+    permissions:
+      pages: write
+      id-token: write
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
   
   release:
     name: Semantic Release
-    needs: [test, pages]
+    needs: [test, deploy]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
@@ -118,10 +139,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: npx semantic-release
-        
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: |
-            examples/dist/
