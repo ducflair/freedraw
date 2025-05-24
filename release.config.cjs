@@ -18,11 +18,11 @@ module.exports = {
       {
         // Prepare step: Set the crate version and build the project
         prepareCmd:
-          "cargo set-version ${nextRelease.version} && cargo build --release",
+          "cargo set-version -p freedraw ${nextRelease.version} && cargo build --release",
         
         // Publish step: Publish the crate to crates.io
         publishCmd:
-          "cargo publish --allow-dirty --token ${process.env.CARGO_REGISTRY_TOKEN}",
+          "cargo publish -p freedraw --allow-dirty --token ${process.env.CARGO_REGISTRY_TOKEN}",
       }
     ],
   ],
